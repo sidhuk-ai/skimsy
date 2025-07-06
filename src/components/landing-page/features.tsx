@@ -201,8 +201,7 @@ export default function FeaturesSection() {
                       Real-Time Analytics
                     </h2>
                     <p className="text-muted-foreground">
-                      Provident fugit vero voluptate. Voluptates a sapiente
-                      inventore nisi.
+                      Monitor the delivery success and engagement as it happens ~ optimize every newsletter in-flight.
                     </p>
                   </div>
                 </div>
