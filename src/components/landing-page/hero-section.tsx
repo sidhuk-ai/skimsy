@@ -148,7 +148,7 @@ export default function HeroSection() {
                       size="lg"
                       className="rounded-xl px-5 text-base"
                     >
-                      <Link href="#link">
+                      <Link href="/dashboard">
                         <span className="text-nowrap">Start Building</span>
                       </Link>
                     </Button>
@@ -188,11 +188,11 @@ export default function HeroSection() {
                 />
                 <div className="inset-shadow-2xs ring-background dark:inset-shadow-white/20 bg-background relative mx-auto max-w-6xl overflow-hidden rounded-2xl border p-4 shadow-lg shadow-zinc-950/15 ring-1">
                   <Image
-                    className="bg-background relative hidden object-contain rounded-2xl dark:block"
+                    className="bg-background z-2 relative hidden object-contain rounded-2xl dark:block"
                     src="/hero-img-dark.png"
                     alt="app screen"
-                    width="1880"
-                    height="2218"
+                    width="2700"
+                    height="1440"
                   />
                   <Image
                     className="z-2 border-border/25 relative rounded-2xl object-contain border dark:hidden"
