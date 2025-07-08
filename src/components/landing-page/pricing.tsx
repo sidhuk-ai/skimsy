@@ -69,7 +69,7 @@ export default function Pricing() {
                                 </ul>
                             </CardContent>
 
-                            <CardFooter>
+                            <CardFooter className='mt-5'>
                                 <Button
                                     asChild
                                     className="w-full">
