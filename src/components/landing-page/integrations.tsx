@@ -1,4 +1,4 @@
-import { Gemini, Replit, MagicUI, VSCodium, MediaWiki, GooglePaLM } from '@/components/logos'
+import { Figma, Forms, Notion, Sheets, Slack, Zapier } from '@/components/logos'
 import { LogoIcon } from '@/components/landing-page/logo'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
@@ -18,24 +18,24 @@ export default function IntegrationsSection() {
                             className="bg-linear-to-b border-foreground/5 absolute inset-16 z-10 aspect-square scale-90 animate-spin items-center justify-center rounded-full border-t from-blue-500/15 to-transparent to-25% opacity-0 duration-[3.5s] group-hover:opacity-100"></div>
                         <div className="bg-linear-to-b from-muted-foreground/15 absolute inset-0 flex aspect-square items-center justify-center rounded-full border-t to-transparent to-25%">
                             <IntegrationCard className="-translate-x-1/6 absolute left-0 top-1/4 -translate-y-1/4">
-                                <Gemini />
+                                <Zapier />
                             </IntegrationCard>
                             <IntegrationCard className="absolute top-0 -translate-y-1/2">
-                                <Replit />
+                                <Forms />
                             </IntegrationCard>
                             <IntegrationCard className="translate-x-1/6 absolute right-0 top-1/4 -translate-y-1/4">
-                                <MagicUI />
+                                <Figma />
                             </IntegrationCard>
                         </div>
                         <div className="bg-linear-to-b from-muted-foreground/15 absolute inset-16 flex aspect-square scale-90 items-center justify-center rounded-full border-t to-transparent to-25%">
                             <IntegrationCard className="absolute top-0 -translate-y-1/2">
-                                <VSCodium />
+                                <Slack />
                             </IntegrationCard>
                             <IntegrationCard className="absolute left-0 top-1/4 -translate-x-1/4 -translate-y-1/4">
-                                <MediaWiki />
+                                <Notion />
                             </IntegrationCard>
                             <IntegrationCard className="absolute right-0 top-1/4 -translate-y-1/4 translate-x-1/4">
-                                <GooglePaLM />
+                                <Sheets />
                             </IntegrationCard>
                         </div>
                         <div className="absolute inset-x-0 bottom-0 mx-auto my-2 flex w-fit justify-center gap-2">
