@@ -1,5 +1,5 @@
 import { Gemini, Replit, MagicUI, VSCodium, MediaWiki, GooglePaLM } from '@/components/logos'
-import { LogoIcon } from '@/components/logo'
+import { LogoIcon } from '@/components/landing-page/logo'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
