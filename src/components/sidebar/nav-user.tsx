@@ -1,12 +1,13 @@
 "use client"
 
 import {
-  BadgeCheck,
-  Bell,
   ChevronsUpDown,
-  CreditCard,
+  Laptop,
   LogOut,
+  Moon,
+  MoreVertical,
   Sparkles,
+  Sun,
 } from "lucide-react"
 
 import {
@@ -29,6 +30,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
+import { useTheme } from "next-themes"
 
 export function NavUser({
   user,
@@ -40,7 +42,7 @@ export function NavUser({
   }
 }) {
   const { isMobile } = useSidebar()
-
+  const { theme, setTheme } = useTheme();
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -58,7 +60,7 @@ export function NavUser({
                 <span className="truncate font-medium">{user.name}</span>
                 <span className="truncate text-xs">{user.email}</span>
               </div>
-              <ChevronsUpDown className="ml-auto size-4" />
+              <MoreVertical className="ml-auto size-4" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
@@ -88,17 +90,17 @@ export function NavUser({
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <BadgeCheck />
-                Account
+              <DropdownMenuItem onClick={() => setTheme("light")}>
+                <Sun />
+                Light
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                <CreditCard />
-                Billing
+              <DropdownMenuItem onClick={() => setTheme("dark")}>
+                <Moon />
+                Dark
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Bell />
-                Notifications
+              <DropdownMenuItem onClick={() => setTheme("system")}>
+                <Laptop />
+                System
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
