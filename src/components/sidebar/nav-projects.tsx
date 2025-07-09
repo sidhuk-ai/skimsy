@@ -20,7 +20,7 @@ export function NavProjects() {
           <div className="flex justify-between px-2.5 items-center">
             <h5 className="text-sm pt-2">Free Plan</h5>
             <Button size={"sm"} className="pr-2">
-              <Sparkles className="fill-white" /> Upgrade
+              <Sparkles className="fill-black dark:fill-white" /> Upgrade
             </Button>
           </div>
           <CardContent className="p-2.5 text-muted-foreground">
