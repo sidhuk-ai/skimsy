@@ -1,0 +1,6 @@
+export { default as Zapier } from './Zapier'
+export { default as Sheets } from './Sheets'
+export { default as Slack } from './Slack'
+export { default as Forms } from './Forms'
+export { default as Figma } from './Figma'
+export { default as Notion } from './Notion'
