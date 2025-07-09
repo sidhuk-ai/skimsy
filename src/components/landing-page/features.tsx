@@ -30,9 +30,9 @@ export default function FeaturesSection() {
                 </h2>
               </CardContent>
             </Card>
-            <Card className="relative col-span-full overflow-hidden sm:col-span-3 lg:col-span-2">
+            <Card className="relative col-span-full overflow-hidden group sm:col-span-3 lg:col-span-2">
               <CardContent className="pt-6">
-                <div className="relative mx-auto flex aspect-square size-32 rounded-full border before:absolute before:-inset-2 before:rounded-full before:border dark:border-white/10 dark:before:border-white/5">
+                <div className="relative mx-auto flex aspect-square size-32 rounded-full border before:absolute before:-inset-2 before:rounded-full before:border dark:border-white/10 before:border-primary/55 group-hover:before:animate-ping">
                   <svg
                     className="m-auto h-fit w-24"
                     viewBox="0 0 212 143"
@@ -190,10 +190,10 @@ export default function FeaturesSection() {
                 </div>
               </CardContent>
             </Card>
-            <Card className="card variant-outlined relative col-span-full overflow-hidden lg:col-span-3">
+            <Card className="card variant-outlined relative group col-span-full overflow-hidden lg:col-span-3">
               <CardContent className="grid pt-6 sm:grid-cols-2">
                 <div className="relative z-10 flex flex-col justify-between space-y-12 lg:space-y-6">
-                  <div className="relative flex aspect-square size-12 rounded-full border before:absolute before:-inset-2 before:rounded-full before:border dark:border-white/10 dark:before:border-white/5">
+                  <div className="relative flex aspect-square size-12 rounded-full border before:absolute before:-inset-2 before:rounded-full before:border dark:border-white/10 before:border-primary/55 group-hover:before:animate-ping">
                     <Shield className="m-auto size-5" strokeWidth={1} />
                   </div>
                   <div className="space-y-2">
@@ -254,10 +254,10 @@ export default function FeaturesSection() {
                 </div>
               </CardContent>
             </Card>
-            <Card className="card variant-outlined relative col-span-full overflow-hidden lg:col-span-3">
+            <Card className="card variant-outlined relative col-span-full group overflow-hidden lg:col-span-3">
               <CardContent className="grid h-full pt-6 sm:grid-cols-2">
                 <div className="relative z-10 flex flex-col justify-between space-y-12 lg:space-y-6">
-                  <div className="relative flex aspect-square size-12 rounded-full border before:absolute before:-inset-2 before:rounded-full before:border dark:border-white/10 dark:before:border-white/5">
+                  <div className="relative flex aspect-square size-12 rounded-full border before:absolute before:-inset-2 before:rounded-full before:border dark:border-white/10 before:border-primary/55 group-hover:before:animate-ping">
                     <Users className="m-auto size-6" strokeWidth={1} />
                   </div>
                   <div className="space-y-2">
