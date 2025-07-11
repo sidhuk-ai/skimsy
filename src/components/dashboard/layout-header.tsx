@@ -28,18 +28,18 @@ export default function LayoutHeader() {
         className="mr-2 data-[orientation=vertical]:h-4"
       />
       <Breadcrumb>
-      <BreadcrumbList>
+      <BreadcrumbList className="sm:gap-1">
         {paths.map((path, i) => (
           <div key={i} className="flex gap-1.5 items-center">
             {pathname !== path.href ?
               <>
-                <BreadcrumbItem className="pb-0.5">
+                <BreadcrumbItem>
                   <BreadcrumbLink href={path.href}>{path.label}</BreadcrumbLink>
                 </BreadcrumbItem>
                 {i < paths.length - 1 && <BreadcrumbSeparator />}
               </>
             :
-              <BreadcrumbItem className="pb-0.5">
+              <BreadcrumbItem className="w-fit">
                 <BreadcrumbPage>{path.label}</BreadcrumbPage>
               </BreadcrumbItem>
             }
