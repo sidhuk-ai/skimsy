@@ -11,7 +11,7 @@ export default function ModeToggle() {
   const [checked, setChecked] = useState<boolean>(false);
 
   useEffect(() => {
-    theme === "dark" && setChecked(true)
+    (theme === "dark" || theme === "system") && setChecked(checked => !checked);
   },[]);
 
   const themeChange = () => {
