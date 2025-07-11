@@ -18,7 +18,7 @@ export function NavProjects() {
       <SidebarMenu>
         <Card className="py-2.5 bg-accent/80 text-accent-foreground gap-4">
           <div className="flex justify-between px-2.5 items-center">
-            <h5 className="text-sm pt-2">Free Plan</h5>
+            <h5 className="text-base">Ignite</h5>
             <Button size={"sm"} className="pr-2">
               <Sparkles className="fill-black dark:fill-white" /> Upgrade
             </Button>
@@ -27,7 +27,7 @@ export function NavProjects() {
             <span className="text-sm">Total Subscribers</span>
             <Slider
               defaultValue={[1]}
-              max={100}
+              max={2500}
               step={1}
               disabled
               className="my-2"
