@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { TrendingUp, User2, UserMinus } from "lucide-react";
+import { TrendingUp, UserMinus } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
 import {
@@ -26,7 +26,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { Separator } from "../ui/separator";
 
 const subscriberGrowthData = [
   { date: "2024-06-01", totalSubscribers: 120 },
