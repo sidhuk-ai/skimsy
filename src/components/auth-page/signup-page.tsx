@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { authClient } from "@/lib/auth-client";
 import { CheckIcon, EyeIcon, EyeOffIcon, Loader2, XIcon } from "lucide-react";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { FormEvent, useId, useMemo, useState } from "react";
 import { toast } from "sonner";
 
@@ -15,6 +15,7 @@ export default function SignUpPage() {
   const [password, setPassword] = useState("");
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [loading, setLoading] = useState(false)
+  const router = useRouter();
 
   const toggleVisibility = () => setIsVisible((prevState) => !prevState);
 
@@ -68,11 +69,19 @@ export default function SignUpPage() {
         name: firstName + " " + lastName,
         email,
         password: pwd,
+        image: `https://api.dicebear.com/9.x/initials/svg?seed=${firstName}&backgroundType=gradientLinear`
       }, 
       {
-        onError(context) {
-          toast.error(context.error.message)
+        onRequest: () => {
+          setLoading(true);
         },
+        onError(context) {
+          toast.error(context.error.message);
+          setLoading(false);
+        },
+        onSuccess: () => {
+          router.push('/dashboard');
+        }
       }
     )
   }

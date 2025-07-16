@@ -35,13 +35,10 @@ import { useRouter } from "next/navigation"
 
 export function NavUser() {
   const { isMobile } = useSidebar()
-  const { theme, setTheme } = useTheme();
+  const { setTheme } = useTheme();
   const router = useRouter();
 
-  const { 
-    data: session,
-    isPending,
-  } = authClient.useSession();
+  const { data: session } = authClient.useSession();
 
   const handleSignOut = async () => {
     await authClient.signOut({
@@ -63,7 +60,7 @@ export function NavUser() {
             >
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarImage src={session?.user.image ?? undefined} alt={session?.user.name} />
-                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                <AvatarFallback className="rounded-lg">{session?.user.name.slice(0,2).toUpperCase()}</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium">{session?.user.name}</span>
@@ -82,7 +79,7 @@ export function NavUser() {
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
                   <AvatarImage src={session?.user.image ?? undefined} alt={session?.user.name} />
-                  <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                  <AvatarFallback className="rounded-lg">{session?.user.name.slice(0,2).toUpperCase()}</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">{session?.user.name}</span>
@@ -92,29 +89,29 @@ export function NavUser() {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer">
                 <Sparkles />
                 Upgrade to Pro
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem onClick={() => setTheme("light")}>
+              <DropdownMenuItem className="cursor-pointer" onClick={() => setTheme("light")}>
                 <Sun />
                 Light
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setTheme("dark")}>
+              <DropdownMenuItem className="cursor-pointer" onClick={() => setTheme("dark")}>
                 <Moon />
                 Dark
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setTheme("system")}>
+              <DropdownMenuItem className="cursor-pointer" onClick={() => setTheme("system")}>
                 <Laptop />
                 System
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={handleSignOut}>
-              <LogOut />
+            <DropdownMenuItem className="text-rose-500/90 cursor-pointer hover:!bg-red-500/10 hover:!text-rose-500" onClick={handleSignOut}>
+              <LogOut className="text-rose-500/90" />
               Log out
             </DropdownMenuItem>
           </DropdownMenuContent>
