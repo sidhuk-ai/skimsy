@@ -3,13 +3,47 @@ import { LogoIcon } from "@/components/landing-page/logo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { authClient } from "@/lib/auth-client";
+import { Loader2 } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { FormEvent, useState } from "react";
+import { toast } from "sonner";
 
 export default function LoginPage() {
+  const [loading, setLoading] = useState(false)
+  const router = useRouter();
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target as HTMLFormElement);
+
+    const email = formData.get("email") as string;
+    const password = formData.get("pwd") as string;
+
+    await authClient.signIn.email(
+      {
+        email,
+        password,
+      }, 
+      {
+        onRequest: () => {
+          setLoading(true)
+        },
+        onError(context) {
+          toast.error(context.error.message);
+        },
+        onSuccess: () => {
+          router.push('/dashboard');
+        }
+      }
+    )
+  }
   return (
     <section className="flex min-h-screen bg-zinc-50 px-4 py-16 md:py-32 dark:bg-transparent">
       <form
-        action=""
+        onSubmit={handleSubmit}
         className="bg-card m-auto h-fit w-full max-w-sm rounded-[calc(var(--radius)+.125rem)] border p-0.5 shadow-md dark:[--color-muted:var(--color-zinc-900)]"
       >
         <div className="p-8 pb-6">
@@ -112,7 +146,9 @@ export default function LoginPage() {
               />
             </div>
 
-            <Button className="w-full">Sign In</Button>
+            <Button disabled={loading} type="submit" className="w-full">
+              {loading ? <Loader2 className="animate-spin" /> : "Sign In"}
+            </Button>
           </div>
         </div>
 

@@ -3,15 +3,18 @@ import { LogoIcon } from "@/components/landing-page/logo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { CheckIcon, EyeIcon, EyeOffIcon, XIcon } from "lucide-react";
+import { authClient } from "@/lib/auth-client";
+import { CheckIcon, EyeIcon, EyeOffIcon, Loader2, XIcon } from "lucide-react";
 import Link from "next/link";
-import { useId, useMemo, useState } from "react";
+import { redirect } from "next/navigation";
+import { FormEvent, useId, useMemo, useState } from "react";
+import { toast } from "sonner";
 
 export default function SignUpPage() {
   const id = useId();
   const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
   const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [loading, setLoading] = useState(false)
 
   const toggleVisibility = () => setIsVisible((prevState) => !prevState);
 
@@ -50,10 +53,34 @@ export default function SignUpPage() {
     return "Strong password";
   };
 
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target as HTMLFormElement)
+
+    const firstName = formData.get("firstName") as string;
+    const lastName = formData.get("lastName") as string;
+    const email = formData.get("email") as string;
+    const pwd = formData.get("pwd") as string;
+
+    await authClient.signUp.email(
+      {
+        name: firstName + " " + lastName,
+        email,
+        password: pwd,
+      }, 
+      {
+        onError(context) {
+          toast.error(context.error.message)
+        },
+      }
+    )
+  }
+
   return (
     <section className="flex min-h-screen bg-zinc-50 px-4 py-16 md:py-32 dark:bg-transparent">
       <form
-        action=""
+        onSubmit={handleSubmit}
         className="bg-card m-auto h-fit w-full max-w-sm rounded-[calc(var(--radius)+.125rem)] border p-0.5 shadow-md dark:[--color-muted:var(--color-zinc-900)]"
       >
         <div className="p-8 pb-6">
@@ -124,13 +151,13 @@ export default function SignUpPage() {
                 <Label htmlFor="firstname" className="block text-sm">
                   Firstname
                 </Label>
-                <Input type="text" required name="firstname" id="firstname" />
+                <Input type="text" required name="firstName" id="firstname" />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="lastname" className="block text-sm">
                   Lastname
                 </Label>
-                <Input type="text" required name="lastname" id="lastname" />
+                <Input type="text" required name="lastName" id="lastname" />
               </div>
             </div>
 
@@ -139,8 +166,6 @@ export default function SignUpPage() {
                 Email
               </Label>
               <Input
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
                 type="email"
                 required
                 name="email"
@@ -157,6 +182,7 @@ export default function SignUpPage() {
                   id={id}
                   className="pe-9"
                   placeholder="Password"
+                  name="pwd"
                   type={isVisible ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -236,10 +262,11 @@ export default function SignUpPage() {
             </div>
 
             <Button
-              disabled={strengthScore < 4}
+              type="submit"
+              disabled={strengthScore < 4 || loading}
               className="w-full cursor-pointer"
             >
-              Continue
+              {loading ? <Loader2 className="animate-spin" /> : "Continue"}
             </Button>
           </div>
         </div>
