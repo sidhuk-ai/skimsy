@@ -48,7 +48,7 @@ export default function RootLayout({
           <ProgressProviders>
             {children}
           </ProgressProviders>
-          <Toaster />
+          <Toaster position="top-center" />
         </ThemeProvider>
       </body>
     </html>
