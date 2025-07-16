@@ -69,7 +69,7 @@ const TemplateCard = () => {
                 Duplicate
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <p className="text-xs p-0.5">Last updated few days ago</p>
+              <p className="text-xs text-muted-foreground px-0.5">Last updated few days ago</p>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
