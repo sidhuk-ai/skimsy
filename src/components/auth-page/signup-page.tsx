@@ -79,8 +79,8 @@ export default function SignUpPage() {
           toast.error(context.error.message);
           setLoading(false);
         },
-        onSuccess: () => {
-          router.push('/dashboard');
+        onSuccess: (ctx) => {
+          router.push(`/create-workspace/${ctx.data.user.id}`);
         }
       }
     )
