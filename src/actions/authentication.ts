@@ -1,6 +1,7 @@
 "use server";
 
 import { auth } from "@/lib/auth";
+import prisma from "@/lib/db";
 import { headers } from "next/headers";
 
 export async function authUser() {
@@ -13,4 +14,34 @@ export async function authUser() {
     }
 
     return session;
+}
+
+export async function userDetails(userId: string) {
+    const details = await prisma.user.findUnique({
+        where: {
+            id: userId
+        },
+        select: {
+            id: true,
+            name: true,
+            image: true
+        }
+    })
+
+    if(!details) return null;
+
+    return details;
+}
+
+export async function existingUser(userId: string) {
+    const userData = await prisma.user.findUnique({
+        where: {
+            id: userId
+        },
+        select: {
+            id: true
+        }
+    });
+
+    return !!userData;
 }
