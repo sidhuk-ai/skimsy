@@ -8,35 +8,43 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createWorkspace } from "@/actions/workspace";
 import { toast } from "sonner";
+import { userDetails } from "@/actions/authentication";
 
 export default function CreateWorkspacePage({ userId }: { userId: string }) {
   const [isSuccess, setIsSuccess] = useState(false);
-  const [workspaceData, setWorkspaceData] = useState<WorkspaceFormData | null>( null );
+  const [workspaceData, setWorkspaceData] = useState<WorkspaceFormData | null>(
+    null
+  );
   const router = useRouter();
 
   const handleFormSubmit = async (data: WorkspaceFormData) => {
     // Simulate API call
     const promise = createWorkspace(userId, data.workspaceName);
 
-    toast.promise(promise,{
+    toast.promise(promise, {
       loading: "Loading...",
       success: (resp) => {
-        return `${resp.name} Created`
+        return `${resp.name} Created`;
       },
-      error: "Error occured while creating workspace."
-    })
+      error: "Error occured while creating workspace.",
+    });
     setWorkspaceData(data);
     setIsSuccess(true);
   };
 
   const handleContinue = () => {
-    console.log("Navigating to templates...");
     router.push("/dashboard/templates");
   };
 
-  const handleCancel = () => {
-    console.log("Canceling workspace creation...");
-    // In a real app, navigate back to dashboard
+  const handleCancel = async () => {
+    const details = await userDetails(userId);
+    if (!details) {
+      toast.error("User not found with current ID.");
+      return;
+    }
+    await createWorkspace(details.id, `${details.name}'s Workspace`);
+
+    router.push("/dashboard");
   };
 
   return (
@@ -79,22 +87,6 @@ export default function CreateWorkspacePage({ userId }: { userId: string }) {
           </>
         )}
       </main>
-
-      {/* Footer */}
-      <footer className="border-t bg-card/30 backdrop-blur-sm py-6 mt-auto">
-        <div className="container px-4 text-center">
-          <p className="text-sm text-muted-foreground">
-            © 2024 Vectora. All rights reserved. |{" "}
-            <Link href="#" className="hover:text-foreground transition-colors">
-              Privacy Policy
-            </Link>{" "}
-            |{" "}
-            <Link href="#" className="hover:text-foreground transition-colors">
-              Terms of Service
-            </Link>
-          </p>
-        </div>
-      </footer>
     </div>
   );
 }

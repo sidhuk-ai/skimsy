@@ -25,7 +25,16 @@ import {
   workspaceFormSchema,
   type WorkspaceFormData,
 } from "@/lib/validations/workspace";
-import { ArrowRight, Briefcase, Building2, Globe, Loader2, Rocket, Save, Target } from "lucide-react";
+import {
+  ArrowRight,
+  Briefcase,
+  Building2,
+  Globe,
+  Loader2,
+  Rocket,
+  Save,
+  Target,
+} from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Input } from "../ui/input";
@@ -38,10 +47,11 @@ import {
 } from "../ui/select";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
+import { toast } from "sonner";
 
 interface WorkspaceFormProps {
   onSubmit: (data: WorkspaceFormData) => Promise<void>;
-  onCancel?: () => void;
+  onCancel: () => Promise<void>;
   initialData?: Partial<WorkspaceFormData>;
   className?: string;
 }
@@ -53,6 +63,8 @@ export function WorkspaceForm({
   className,
 }: WorkspaceFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isCancelling, setIsCancelling] = useState(false);
+  
 
   const form = useForm<WorkspaceFormData>({
     resolver: zodResolver(workspaceFormSchema),
@@ -70,9 +82,19 @@ export function WorkspaceForm({
     try {
       await onSubmit(data);
     } catch (error) {
-      console.error("Workspace creation error:", error);
+      toast.error(`Workspace creation error: ${error}`);
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handleCancel = async () => {
+    setIsCancelling(true);
+    try {
+      await onCancel();
+    } catch (error) {
+      toast.error(`Unexpected error occured: ${error}`);
+      setIsCancelling(false);
     }
   };
 
@@ -137,15 +159,17 @@ export function WorkspaceForm({
                       <Target className="h-4 w-4 text-primary" />
                       Primary Use Case
                     </FormLabel>
-                      <Select onValueChange={field.onChange}
+                    <Select
+                      onValueChange={field.onChange}
                       defaultValue={field.value}
-                      disabled={isSubmitting}>
-                    <FormControl>
-<SelectTrigger className="h-12 bg-background/50 border-border/50 focus:bg-background transition-colors">
-                          <SelectValue placeholder="Select your industry" />
+                      disabled={isSubmitting}
+                    >
+                      <FormControl>
+                        <SelectTrigger className="cursor-pointer h-12 w-full bg-background/50 border-border/50 focus:bg-background transition-colors">
+                          <SelectValue placeholder="Select your use case" />
                         </SelectTrigger>
-                    </FormControl>
-                    <SelectContent className="max-h-[300px]">
+                      </FormControl>
+                      <SelectContent className="max-h-[300px]">
                         {useCaseOptions.map((industry) => (
                           <SelectItem
                             key={industry.value}
@@ -154,8 +178,10 @@ export function WorkspaceForm({
                           >
                             <div className="flex items-center justify-between w-full">
                               <span>{industry.label}</span>
-                              {industry.value === "technology" && (
-                                <Badge variant="secondary">Popular</Badge>
+                              {industry.value === "marketing" && (
+                                <Badge className="bg-primary rounded-full mx-1">
+                                  Popular
+                                </Badge>
                               )}
                             </div>
                           </SelectItem>
@@ -187,7 +213,7 @@ export function WorkspaceForm({
                       disabled={isSubmitting}
                     >
                       <FormControl>
-                        <SelectTrigger className="h-12 bg-background/50 border-border/50 focus:bg-background transition-colors">
+                        <SelectTrigger className="cursor-pointer h-12 w-full bg-background/50 border-border/50 focus:bg-background transition-colors">
                           <SelectValue placeholder="Select your industry" />
                         </SelectTrigger>
                       </FormControl>
@@ -200,8 +226,10 @@ export function WorkspaceForm({
                           >
                             <div className="flex items-center justify-between w-full">
                               <span>{industry.label}</span>
-                              {industry.value === "technology" && (
-                                <Badge variant="secondary">Popular</Badge>
+                              {industry.value === "retail" && (
+                                <Badge className="bg-primary rounded-full mx-1">
+                                  Popular
+                                </Badge>
                               )}
                             </div>
                           </SelectItem>
@@ -216,7 +244,7 @@ export function WorkspaceForm({
                 )}
               />
 
-              {/* Website Type Selection */}
+              {/* Newsletter Type Selection */}
               <FormField
                 control={form.control}
                 name="newsletterType"
@@ -224,7 +252,7 @@ export function WorkspaceForm({
                   <FormItem>
                     <FormLabel className="text-base font-semibold flex items-center gap-2">
                       <Globe className="h-4 w-4 text-primary" />
-                      Website Type
+                      Newsletter Type
                     </FormLabel>
                     <Select
                       onValueChange={field.onChange}
@@ -232,7 +260,7 @@ export function WorkspaceForm({
                       disabled={isSubmitting}
                     >
                       <FormControl>
-                        <SelectTrigger className="h-12 bg-background/50 border-border/50 focus:bg-background transition-colors">
+                        <SelectTrigger className="cursor-pointer !h-13 w-full bg-background/50 border-border/50 focus:bg-background transition-colors">
                           <SelectValue placeholder="Select website type" />
                         </SelectTrigger>
                       </FormControl>
@@ -248,12 +276,15 @@ export function WorkspaceForm({
                                 <span className="font-medium">
                                   {type.label}
                                 </span>
-                                {(type.value === "business" ||
-                                  type.value === "ecommerce") && (
-                                  <Badge variant="secondary">Popular</Badge>
+                                {(type.value === "weekly" ||
+                                  type.value === "monthly" ||
+                                  type.value === "promotional") && (
+                                  <Badge className="bg-primary rounded-full mx-1">
+                                    Popular
+                                  </Badge>
                                 )}
                               </div>
-                              <p className="text-sm text-muted-foreground">
+                              <p className="text-sm text-muted-foreground/70">
                                 {type.description}
                               </p>
                             </div>
@@ -272,22 +303,20 @@ export function WorkspaceForm({
             <div
               className={`flex flex-col sm:flex-row gap-4 justify-end pt-6 border-t ${className}`}
             >
-              {onCancel && (
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={onCancel}
-                  disabled={isSubmitting}
-                  className="sm:w-auto bg-transparent"
-                >
-                  Cancel
-                </Button>
-              )}
+              <Button
+                type="button"
+                variant="outline"
+                onClick={handleCancel}
+                disabled={isCancelling || isSubmitting}
+                className="sm:w-auto bg-transparent cursor-pointer"
+              >
+                {isCancelling ? "Redirecting..." : "Skip"}
+              </Button>
 
               <Button
                 type="submit"
-                disabled={isSubmitting}
-                className="bg-gradient-to-r from-primary to-blue-600 hover:from-primary/90 hover:to-blue-600/90 transition-all duration-300 group sm:w-auto min-w-[160px]"
+                disabled={isSubmitting || isCancelling}
+                className="bg-gradient-to-r from-primary cursor-pointer to-primary/50 hover:primary/90 transition-all duration-300 group sm:w-auto min-w-[160px]"
               >
                 {isSubmitting ? (
                   <>
