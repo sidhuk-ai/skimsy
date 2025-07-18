@@ -1,6 +1,7 @@
+import { authUser } from "@/actions/authentication";
 import { workspaceExists } from "@/actions/workspace"
 import CreateWorkspacePage from "@/components/workspace/workspace-creation"
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 export default async function page({
     params
@@ -9,7 +10,10 @@ export default async function page({
 }) {
     const slug = (await params).slug
 
-    const existingWorkspace = await workspaceExists(slug);
+    const userDetails = await authUser();
+    if(!userDetails) redirect("/login");
+
+    const existingWorkspace = await workspaceExists(userDetails.session.userId);
 
     if(existingWorkspace) return notFound();
 

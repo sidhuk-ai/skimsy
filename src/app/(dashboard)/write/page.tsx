@@ -1,9 +1,13 @@
+import { authUser } from "@/actions/authentication";
 import Emaileditor from "@/components/builder/email.builder";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
-export default function Page() {
+export default async function Page() {
+  const session = await authUser();
+  if(!session) redirect("/login");
   return (
     <div className="flex min-h-screen flex-col justify-between space-y-4 p-4 md:p-8 pt-6">
       <Link href={'/dashboard'}>

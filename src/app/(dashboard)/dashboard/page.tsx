@@ -2,9 +2,11 @@ import { authUser } from "@/actions/authentication";
 import { EmailPerformanceMetrics } from "@/components/dashboard/email-performance-metrics";
 import { GrowthMetrics } from "@/components/dashboard/growth-metrics";
 import { OverviewCards } from "@/components/dashboard/overview-cards";
+import { redirect } from "next/navigation";
 
 export default async function Page() {
   const session = await authUser();
+  if(!session) redirect("/login");
   return (
     <>
       <div className="text-center space-y-2 mb-8">
