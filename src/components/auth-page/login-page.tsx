@@ -33,6 +33,7 @@ export default function LoginPage() {
         },
         onError(context) {
           toast.error(context.error.message);
+          setLoading(false);
         },
         onSuccess: () => {
           router.push('/dashboard');
@@ -146,7 +147,7 @@ export default function LoginPage() {
               />
             </div>
 
-            <Button disabled={loading} type="submit" className="w-full">
+            <Button disabled={loading} type="submit" className="w-full cursor-pointer">
               {loading ? <Loader2 className="animate-spin" /> : "Sign In"}
             </Button>
           </div>
