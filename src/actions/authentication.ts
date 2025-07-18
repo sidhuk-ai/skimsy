@@ -3,6 +3,7 @@
 import { auth } from "@/lib/auth";
 import prisma from "@/lib/db";
 import { headers } from "next/headers";
+import { cache } from "react";
 
 export async function authUser() {
     const session = await auth.api.getSession({
@@ -15,6 +16,18 @@ export async function authUser() {
 
     return session;
 }
+
+export const cachedAuthUser = cache(async () => {
+    const session = await auth.api.getSession({
+        headers: await headers()
+    })
+
+    if(!session || !session.session || !session.user) {
+        return null;
+    }
+
+    return session;
+})
 
 export async function userDetails(userId: string) {
     const details = await prisma.user.findUnique({
