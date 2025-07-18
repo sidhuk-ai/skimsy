@@ -15,7 +15,7 @@ enum EmailStatus {
 }
 
 model User {
-  id        String   @id @default(uuid())
+  id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -78,7 +78,7 @@ model Verification {
 }
 
 model Workspace {
-  id        String   @id @default(uuid())
+  id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -97,7 +97,7 @@ model Workspace {
 }
 
 model Subscriber {
-  id          String   @id @default(uuid())
+  id          String   @id @default(cuid())
   createdAt   DateTime @default(now())
   email       String
   workspaceId String
@@ -106,7 +106,7 @@ model Subscriber {
 }
 
 model Form {
-  id          String   @id @default(uuid())
+  id          String   @id @default(cuid())
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   name        String
@@ -118,7 +118,7 @@ model Form {
 }
 
 model Template {
-  id          String   @id @default(uuid())
+  id          String   @id @default(cuid())
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   name        String
@@ -129,7 +129,7 @@ model Template {
 }
 
 model EmailSequence {
-  id          String   @id @default(uuid())
+  id          String   @id @default(cuid())
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   name        String
@@ -141,7 +141,7 @@ model EmailSequence {
 }
 
 model SequenceStep {
-  id          String   @id @default(uuid())
+  id          String   @id @default(cuid())
   createdAt   DateTime @default(now())
   subject     String
   html        String   @db.Text
@@ -152,7 +152,7 @@ model SequenceStep {
 }
 
 model EmailSequenceAnalytics {
-  id                String @id @default(uuid())
+  id                String @id @default(cuid())
   sequenceId        String @unique
   totalEmailsSent   Int    @default(0)
   totalOpens        Int    @default(0)
@@ -163,7 +163,7 @@ model EmailSequenceAnalytics {
 }
 
 model EmailCampaign {
-  id          String      @id @default(uuid())
+  id          String      @id @default(cuid())
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
   name        String
@@ -178,7 +178,7 @@ model EmailCampaign {
 }
 
 model CampaignAnalytics {
-  id              String @id @default(uuid())
+  id              String @id @default(cuid())
   campaignId      String @unique
   openRate        Float  @default(0)
   clickRate       Float  @default(0)
@@ -192,7 +192,7 @@ model CampaignAnalytics {
 }
 
 model WorkspaceMetrics {
-  id                 String @id @default(uuid())
+  id                 String @id @default(cuid())
   workspaceId        String @unique
   totalSubscribers   Int    @default(0)
   totalEmailsSent    Int    @default(0)
@@ -206,7 +206,7 @@ model WorkspaceMetrics {
 }
 
 model SubscriptionPlan {
-  id              String  @id @default(uuid())
+  id              String  @id @default(cuid())
   workspaceId     String  @unique
   stripePriceId   String
   active          Boolean @default(true)
