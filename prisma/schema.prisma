@@ -122,6 +122,7 @@ model Template {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   name        String
+  slug        String   @unique
   html        String   @db.Text
   workspaceId String
 
