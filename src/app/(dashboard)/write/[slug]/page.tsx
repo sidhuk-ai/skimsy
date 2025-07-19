@@ -1,13 +1,18 @@
 import { authUser } from "@/actions/authentication";
 import Emaileditor from "@/components/builder/email.builder";
-import { Button } from "@/components/ui/button";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
-export default async function Page() {
+interface DynamicPathProps {
+  param: Promise<{ slug: string }>
+}
+
+export default async function Page({ param }: DynamicPathProps) {
   const session = await authUser();
   if(!session) redirect("/login");
+
+  const slug = (await param).slug
   return (
     <div className="flex min-h-screen flex-col justify-between space-y-4 p-4 md:p-8 pt-6">
       <Link href={'/dashboard'}>
@@ -16,15 +21,7 @@ export default async function Page() {
         <span className="group-hover:underline">Exit</span>
       </div>
       </Link>
-      <Emaileditor subjectTitle="test email" />
-      <div className="flex gap-2 justify-end w-full">
-        <Button size={"lg"} variant={"outline"} className="cursor-pointer">
-          Save Draft
-        </Button>
-        <Button size={"lg"} className="cursor-pointer">
-          Send
-        </Button>
-      </div>
+      <Emaileditor tempName="test email" workspaceId={slug} />
     </div>
   );
 }
