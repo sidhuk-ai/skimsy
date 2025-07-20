@@ -17,13 +17,6 @@ import Image from "next/image";
 export default function TemplatesPage() {
   return (
     <>
-      <div className="w-full py-4 flex justify-between">
-        <h1 className="text-2xl">Saved Templates</h1>
-        <Button className="hover:scale-110 cursor-pointer hover:transition">
-          <Plus />
-          Create New
-        </Button>
-      </div>
 
       <div className="container mx-auto">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 grid-rows-2 gap-4">
