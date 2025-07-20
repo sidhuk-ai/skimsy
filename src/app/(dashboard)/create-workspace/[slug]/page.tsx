@@ -13,7 +13,7 @@ export default async function page({
     const userDetails = await authUser();
     if(!userDetails) redirect("/login");
 
-    const existingWorkspace = await workspaceExists(userDetails.session.userId);
+    const existingWorkspace = await workspaceExists({userId: userDetails.session.userId});
 
     if(existingWorkspace) return notFound();
 
