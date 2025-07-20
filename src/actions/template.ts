@@ -2,6 +2,7 @@
 
 import prisma from "@/lib/db";
 import { generateSlug } from "@/lib/utils";
+import { workspaceExists } from "./workspace";
 
 export async function saveTemplate({
     name,
@@ -35,4 +36,24 @@ export async function saveTemplate({
     } catch (error) {
         console.log(error);
     }
+}
+
+export async function getTemplates(workspaceId: string) {
+    const existingWorkspace = await workspaceExists({id: workspaceId});
+
+    if(!existingWorkspace) return null;
+
+    const templates = await prisma.template.findMany({
+        where: {
+            workspaceId
+        },
+        select: {
+            id: true,
+            name: true,
+            updatedAt: true,
+            createdAt: true
+        }
+    });
+
+    return templates
 }
