@@ -4,15 +4,13 @@ import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
-interface DynamicPathProps {
-  param: Promise<{ slug: string }>
-}
-
-export default async function Page({ param }: DynamicPathProps) {
+export default async function Page({ params }: {
+  params: Promise<{ slug: string}>
+}) {
   const session = await authUser();
   if(!session) redirect("/login");
 
-  const slug = (await param).slug
+  const id = (await params).slug;
   return (
     <div className="flex min-h-screen flex-col justify-between space-y-4 p-4 md:p-8 pt-6">
       <Link href={'/dashboard'}>
@@ -21,7 +19,7 @@ export default async function Page({ param }: DynamicPathProps) {
         <span className="group-hover:underline">Exit</span>
       </div>
       </Link>
-      <Emaileditor tempName="test email" workspaceId={slug} />
+      <Emaileditor tempName="test email" workspaceId={id} />
     </div>
   );
 }
