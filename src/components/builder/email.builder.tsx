@@ -42,7 +42,7 @@ export default function Emaileditor({
         toast(res?.msg);
         router.push('/dashboard/templates');
       }).catch((e) => {
-        toast.error(String(e));
+        toast.error(JSON.stringify(e));
       })
     })
   }
@@ -56,11 +56,10 @@ export default function Emaileditor({
       {!loading && (
         <div className="w-full h-[80vh] relative">
           <EmailEditor
-            // projectId={276439}
-            options={{ appearance: { theme: "classic_dark" } }}
             minHeight={"80vh"}
             ref={emailEditorRef}
             onReady={onReady}
+            projectId={276439}
           />
         </div>
       )}
@@ -68,7 +67,7 @@ export default function Emaileditor({
         <Button onClick={saveDraft} size={"lg"} variant={"outline"} className="cursor-pointer">
           Save Draft
         </Button>
-        <Button size={"lg"} className="cursor-pointer">
+        <Button size={"lg"} onClick={exportHtml} className="cursor-pointer">
           Send
         </Button>
       </div>

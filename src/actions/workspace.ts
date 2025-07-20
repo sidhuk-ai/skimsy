@@ -21,15 +21,13 @@ export async function workspaceDetails(userId: string) {
     return workspace
 }
 
-export async function workspaceExists( userId?: string, id?: string, slug?: string ) {
-    const options = {
-        userId,
-        id,
-        slug
-    }
+export async function workspaceExists({userId, id, slug}: { userId?: string, id?: string, slug?: string }) {
+
     const data = await prisma.workspace.findUnique({
         where: {
-            ...options
+            id,
+            slug,
+            userId
         },
         select: {
             id: true
